@@ -1,7 +1,15 @@
 import type { Metadata } from "next";
-import './globals.css';
+import "./globals.css";
 
-import { Inter } from 'next/font/google';
+import { Inter } from "next/font/google";
+import localFont from "next/font/local";
+
+import { cn } from "@/lib/utils";
+
+const slide_gravity = localFont({
+  src: "./fonts/SlideGravity.woff2",
+  variable: "--font-heading",
+});
 
 const inter = Inter({
   variable: "--font-inter",
@@ -23,7 +31,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} font-sans antialiased bg-neutral-950 text-white`}
+        className={cn(
+          inter.variable,
+          slide_gravity.variable,
+          "font-sans antialiased bg-white text-black"
+        )}
       >
         {children}
       </body>

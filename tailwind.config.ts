@@ -18,6 +18,7 @@ export default {
     },
     fontFamily: {
       sans: ["var(--font-inter)", "sans-serif"],
+      heading: ["var(--font-heading)", "sans"],
     },
     screens: {
       sm: "375px",
@@ -26,6 +27,7 @@ export default {
     },
     extend: {
       colors: {
+        brand: "#3b42c4",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {
