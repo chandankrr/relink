@@ -151,7 +151,7 @@ export const Icons = {
       xmlns="http://www.w3.org/2000/svg"
       className={props.className}
     >
-      <g clip-path="url(#clip0_7226_92)">
+      <g clipPath="url(#clip0_7226_92)">
         <mask
           id="mask0_7226_92"
           style={{ maskType: "alpha" }}
