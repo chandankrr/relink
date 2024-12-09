@@ -43,9 +43,11 @@ export const Navbar = () => {
     >
       <div className="px-4 w-full lg:px-6">
         <div className="grid grid-cols-2 items-center lg:grid-cols-3 border-white/15 md:pr-2">
-          <Link href="/">
-            <Icons.logo className="w-auto h-9 md:h-auto" />
-          </Link>
+          <div>
+            <Link href="/" className="inline-flex">
+              <Icons.logo className="w-auto h-9 md:h-auto" />
+            </Link>
+          </div>
           <div className="hidden justify-center items-center lg:flex">
             <nav className="flex gap-6 text-sm uppercase">
               {navLinks.map((link) => (

@@ -64,7 +64,7 @@ export default function Home() {
               Unleash the Power of Instagram Automation
             </Heading>
 
-            <p className="mx-auto mt-5 max-w-xl text-xl leading-6 md:max-w-lg lg:max-w-xl">
+            <p className="mx-auto mt-5 max-w-xl text-base leading-6 md:text-lg lg:text-xl md:max-w-lg lg:max-w-xl">
               Harness the power of AI to boost engagement, grow your audience,
               and save countless hours. Experience seamless comments, DMs, and
               more.
@@ -107,7 +107,7 @@ export default function Home() {
                 <p className="mt-4 text-base leading-6 text-gray-800">
                   {feature.description}
                 </p>
-                <p className="flex gap-2 items-center mt-4 mb-6 text-sm font-light tracking-widest underline uppercase cursor-pointer group underline-offset-3">
+                <p className="inline-flex gap-2 items-center mt-4 mb-6 text-sm font-light tracking-widest underline uppercase cursor-pointer group underline-offset-2">
                   Learn more
                   <ArrowRightIcon className="duration-200 size-4 group-hover:translate-x-1" />
                 </p>
@@ -161,12 +161,12 @@ export default function Home() {
 
           <div className="grid grid-cols-1 mx-auto mt-10 divide-y divide-gray-200 lg:max-w-none md:max-w-lg md:mt-16 lg:mx-0 lg:grid-cols-2 lg:divide-y-0 lg:divide-x">
             {/* first customer review */}
-            <div className="flex flex-auto flex-col gap-4 bg-[#F8F9FD] p-6 sm:p-8 lg:p-16">
+            <div className="flex flex-auto flex-col gap-4 bg-[#edf2ed] p-6 sm:p-8 lg:p-16">
               <div className="flex gap-0.5 mb-2 justify-center lg:justify-start">
                 {[1, 2, 3, 4, 5].map((_, i) => (
                   <Star
                     key={i}
-                    className="size-5 fill-[#4B76C9] text-[#4B76C9]"
+                    className="size-5 fill-[#e1e090] text-[#e1e090]"
                   />
                 ))}
               </div>
@@ -196,12 +196,12 @@ export default function Home() {
             </div>
 
             {/* second customer review */}
-            <div className="flex flex-auto flex-col gap-4 bg-[#F8F9FD] p-6 sm:p-8 lg:p-16">
+            <div className="flex flex-auto flex-col gap-4 bg-[#edf2ed] p-6 sm:p-8 lg:p-16">
               <div className="flex gap-0.5 mb-2 justify-center lg:justify-start">
                 {[1, 2, 3, 4, 5].map((_, i) => (
                   <Star
                     key={i}
-                    className="size-5 fill-[#4B76C9] text-[#4B76C9]"
+                    className="size-5 fill-[#e1e090] text-[#e1e090]"
                   />
                 ))}
               </div>
