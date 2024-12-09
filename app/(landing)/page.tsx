@@ -30,6 +30,29 @@ const features = [
   },
 ];
 
+const plans = [
+  {
+    id: 1,
+    plan: "Free",
+    description:
+      "Get started with access to Slide basic features to engage with your audience FREE OF CHARGE:",
+    price: "0",
+    text: "Get started",
+    required: "No credit/debit card required",
+    color: "#edf2ed", // bg-[#edf2ed]
+  },
+  {
+    id: 2,
+    plan: "Pro",
+    description:
+      "Grow your engagement with access to all advanced Pro features, starting at a cost of:",
+    price: "15",
+    text: "Become pro",
+    required: "Credit/debit card required",
+    color: "#007232", // bg-[#007232]
+  },
+];
+
 export default function Home() {
   return (
     <>
@@ -38,7 +61,7 @@ export default function Home() {
         <div className="container text-center">
           <div>
             <Heading className="mt-24 md:mt-28 lg:mt-0">
-              Unleash the power of chat marketing
+              Unleash the Power of Instagram Automation
             </Heading>
 
             <p className="mx-auto mt-5 max-w-xl text-xl leading-6 md:max-w-lg lg:max-w-xl">
@@ -48,24 +71,27 @@ export default function Home() {
             </p>
 
             <Button variant="primary" className="mt-5 tracking-widest">
-              Get Started For Free
+              Start Automating Now
             </Button>
           </div>
           <div className="mt-12 text-center">
             <Image
               src={chatImage}
-              className="mx-auto select-none pointer-events-none size-[95%] md:size-[75%] lg:size-[60%]"
+              className="mx-auto select-none pointer-events-none size-[95%] md:size-[75%] lg:size-[60%] shadow-sm"
               alt="Image of product demo"
             />
+            <p className="mx-auto mt-6 max-w-xs text-base font-semibold tracking-wide uppercase md:text-lg md:max-w-none lg:text-xl">
+              Trusted by many Users Worldwide
+            </p>
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="mt-20 md:mt-28 lg:mt-40">
+      <section id="features" className="mt-20 md:mt-28 lg:mt-40">
         <div className="container text-center">
           <Heading className="bg-[#e1e091] inline">
-            Use Chat Marketing to drive more sales on autopilot
+            Enhance Instagram Engagement with Powerful Automation Tools
           </Heading>
 
           <div className="grid grid-cols-1 gap-5 mx-auto mt-10 md:mt-16 lg:grid-cols-3 lg:max-w-none md:max-w-lg">
@@ -91,12 +117,47 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Pricing Section */}
+      <section id="pricing" className="mt-20 md:mt-28 lg:mt-40">
+        <div className="container text-center">
+          <Heading className="inline">Simple no-tricks Pricing</Heading>
+
+          <div className="grid grid-cols-1 gap-10 mx-auto mt-10 lg:max-w-none md:max-w-lg md:mt-16 lg:mx-0 lg:grid-cols-2">
+            {plans.map((plan) => {
+              const isPro = plan.id === 2;
+              return (
+                <div
+                  key={plan.id}
+                  className={`px-8 py-12 bg-[${plan.color}] ${isPro ? "text-white" : "text-black"}`}
+                >
+                  <h3 className="font-semibold text-3xl/8">{plan.plan}</h3>
+                  <p className="mx-auto mt-2 text-base max-w-80 text-pretty">
+                    {plan.description}
+                  </p>
+                  <div className="flex gap-2 justify-center items-baseline mt-10 mb-6">
+                    <p className="text-7xl font-heading">${plan.price}</p>
+                    <span>/mo</span>
+                  </div>
+                  <button
+                    className={`py-3 w-full text-lg bg-white transition-all duration-200 max-w-60 hover:bg-black hover:text-white ${isPro && "text-black"}`}
+                  >
+                    {plan.text}
+                  </button>
+                  <p className="mt-6">
+                    {isPro && <sup>*</sup>}
+                    {plan.required}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
       {/* testimonial section */}
       <section className="mt-20 md:mt-28 lg:mt-40">
         <div className="container text-center">
-          <Heading className="bg-[#d4b6e0] inline">
-            What our Customers say
-          </Heading>
+          <Heading className="inline">What our Customers say</Heading>
 
           <div className="grid grid-cols-1 mx-auto mt-10 divide-y divide-gray-200 lg:max-w-none md:max-w-lg md:mt-16 lg:mx-0 lg:grid-cols-2 lg:divide-y-0 lg:divide-x">
             {/* first customer review */}

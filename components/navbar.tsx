@@ -9,9 +9,9 @@ import { Button } from "./button";
 import { Icons } from "./icons";
 
 const navLinks = [
-  { label: "Features", href: "#" },
+  { label: "Features", href: "#features" },
+  { label: "Pricing", href: "#pricing" },
   { label: "Integrations", href: "#" },
-  { label: "Pricing", href: "#" },
   { label: "FAQs", href: "#" },
 ];
 
@@ -65,13 +65,13 @@ export const Navbar = () => {
               variant="secondary"
               className="hidden items-center tracking-widest lg:inline-flex"
             >
-              Log In
+              <Link href="/sign-in">Sign In</Link>
             </Button>
             <Button
               variant="primary"
               className="hidden items-center tracking-widest lg:inline-flex"
             >
-              Sign Up
+              <Link href="/sign-up">Sign Up</Link>
             </Button>
           </div>
         </div>
