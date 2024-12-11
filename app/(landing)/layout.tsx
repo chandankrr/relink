@@ -6,7 +6,7 @@ import { Navbar } from "@/components/navbar";
 export default function Layout({ children }: { children: ReactNode }) {
   return (
     <>
-      <Navbar />
+      <Navbar isDefault={true} />
       {children}
       <Footer />
     </>

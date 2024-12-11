@@ -1,10 +1,12 @@
 import { ArrowRightIcon, Star } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 import { Button } from "@/components/button";
 import { Heading } from "@/components/heading";
 import { Icons } from "@/components/icons";
 import chatImage from "@/public/chat.png";
+import { currentUser } from "@clerk/nextjs/server";
 
 const features = [
   {
@@ -53,7 +55,10 @@ const plans = [
   },
 ];
 
-export default function Home() {
+export default async function Home() {
+  const user = await currentUser();
+  const href = user ? "/dashboard" : "/sign-up";
+
   return (
     <>
       {/* Hero Section */}
@@ -71,7 +76,7 @@ export default function Home() {
             </p>
 
             <Button variant="primary" className="mt-5 tracking-widest">
-              Start Automating Now
+              <Link href={href}>Start Automating Now</Link>
             </Button>
           </div>
           <div className="mt-12 text-center">

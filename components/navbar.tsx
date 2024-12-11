@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import { cn } from "@/lib/utils";
+import { useClerk, useUser } from "@clerk/nextjs";
 
 import { Button } from "./button";
 import { Icons } from "./icons";
@@ -15,8 +16,15 @@ const navLinks = [
   { label: "FAQs", href: "#" },
 ];
 
-export const Navbar = () => {
+export const Navbar = ({ isDefault }: { isDefault: boolean }) => {
   const [isScrolled, setIsScrolled] = useState(false);
+
+  const { user } = useUser();
+  const { signOut } = useClerk();
+
+  const handleSignOut = () => {
+    signOut();
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -37,14 +45,15 @@ export const Navbar = () => {
   return (
     <section
       className={cn(
-        "flex fixed top-0 right-0 left-0 z-30 items-center h-16 bg-white transition-all duration-300 ease-in-out md:h-20 lg:h-32",
+        "flex fixed top-0 right-0 left-0 z-30 items-center h-16 bg-white transition-all duration-300 ease-in-out md:h-20",
+        isDefault ? "lg:h-32" : "shadow-sm lg:h-20",
         isScrolled ? "shadow-sm lg:h-20" : ""
       )}
     >
       <div className="px-4 w-full lg:px-6">
         <div className="grid grid-cols-2 items-center lg:grid-cols-3 border-white/15 md:pr-2">
           <div>
-            <Link href="/" className="inline-flex">
+            <Link href="/" className="inline">
               <Icons.logo className="w-auto h-9 md:h-auto" />
             </Link>
           </div>
@@ -63,18 +72,38 @@ export const Navbar = () => {
           </div>
           <div className="flex gap-4 justify-end">
             <Icons.menu />
-            <Button
-              variant="secondary"
-              className="hidden items-center tracking-widest lg:inline-flex"
-            >
-              <Link href="/sign-in">Sign In</Link>
-            </Button>
-            <Button
-              variant="primary"
-              className="hidden items-center tracking-widest lg:inline-flex"
-            >
-              <Link href="/sign-up">Sign Up</Link>
-            </Button>
+            {user ? (
+              <>
+                <Button
+                  variant="secondary"
+                  className="hidden items-center tracking-wider lg:inline-flex border-red-600"
+                  onClick={handleSignOut}
+                >
+                  Sign Out
+                </Button>
+                <Button
+                  variant="primary"
+                  className="hidden items-center tracking-wider lg:inline-flex"
+                >
+                  <Link href="/dashboard">Dashboard</Link>
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button
+                  variant="secondary"
+                  className="hidden items-center tracking-wider lg:inline-flex"
+                >
+                  <Link href="/sign-in">Sign In</Link>
+                </Button>
+                <Button
+                  variant="primary"
+                  className="hidden items-center tracking-wider lg:inline-flex"
+                >
+                  <Link href="/sign-up">Sign Up</Link>
+                </Button>
+              </>
+            )}
           </div>
         </div>
       </div>
