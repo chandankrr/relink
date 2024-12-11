@@ -120,9 +120,9 @@ export default function Home() {
       {/* Pricing Section */}
       <section id="pricing" className="mt-20 md:mt-28 lg:mt-40">
         <div className="container text-center">
-          <Heading className="inline">Simple no-tricks Pricing</Heading>
+          <Heading className="inline">Simple No-tricks Pricing</Heading>
 
-          <div className="grid grid-cols-1 gap-10 mx-auto mt-10 lg:max-w-none md:max-w-lg md:mt-16 lg:mx-0 lg:grid-cols-2">
+          <div className="grid grid-cols-1 gap-10 mx-auto mt-10 lg:max-w-none md:max-w-lg md:mt-16 lg:mx-0 lg:grid-cols-2 lg:px-28">
             {plans.map((plan) => {
               const isPro = plan.id === 2;
               return (
@@ -161,12 +161,12 @@ export default function Home() {
 
           <div className="grid grid-cols-1 mx-auto mt-10 divide-y divide-gray-200 lg:max-w-none md:max-w-lg md:mt-16 lg:mx-0 lg:grid-cols-2 lg:divide-y-0 lg:divide-x">
             {/* first customer review */}
-            <div className="flex flex-auto flex-col gap-4 bg-[#edf2ed] p-6 sm:p-8 lg:p-16">
+            <div className="flex flex-auto flex-col gap-4 bg-[#f8f9fd] p-6 sm:p-8 lg:p-16">
               <div className="flex gap-0.5 mb-2 justify-center lg:justify-start">
                 {[1, 2, 3, 4, 5].map((_, i) => (
                   <Star
                     key={i}
-                    className="size-5 fill-[#e1e090] text-[#e1e090]"
+                    className="size-5 fill-[#4b76c9] text-[#4b76c9]"
                   />
                 ))}
               </div>
@@ -196,12 +196,12 @@ export default function Home() {
             </div>
 
             {/* second customer review */}
-            <div className="flex flex-auto flex-col gap-4 bg-[#edf2ed] p-6 sm:p-8 lg:p-16">
+            <div className="flex flex-auto flex-col gap-4 bg-[#f8f9fd] p-6 sm:p-8 lg:p-16">
               <div className="flex gap-0.5 mb-2 justify-center lg:justify-start">
                 {[1, 2, 3, 4, 5].map((_, i) => (
                   <Star
                     key={i}
-                    className="size-5 fill-[#e1e090] text-[#e1e090]"
+                    className="size-5 fill-[#4b76c9] text-[#4b76c9]"
                   />
                 ))}
               </div>
