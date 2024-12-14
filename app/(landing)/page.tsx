@@ -1,14 +1,32 @@
-import { ArrowRightIcon, Star } from "lucide-react";
+import { ArrowRightIcon, LucideProps, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-import { Button } from "@/components/button";
 import { Heading } from "@/components/heading";
 import { Icons } from "@/components/icons";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import chatImage from "@/public/chat.png";
 import { currentUser } from "@clerk/nextjs/server";
 
-const features = [
+interface Feature {
+  id: number;
+  title: string;
+  description: string;
+  icon: React.FC<LucideProps>;
+}
+
+interface Plan {
+  id: number;
+  plan: string;
+  description: string;
+  price: string;
+  text: string;
+  required: string;
+  color: string;
+}
+
+const features: Feature[] = [
   {
     id: 1,
     title: "Automate Direct Messages to Followers",
@@ -32,12 +50,12 @@ const features = [
   },
 ];
 
-const plans = [
+const plans: Plan[] = [
   {
     id: 1,
     plan: "Free",
     description:
-      "Get started with access to Slide basic features to engage with your audience FREE OF CHARGE:",
+      "Get started with access to Relink basic features to engage with your audience FREE OF CHARGE:",
     price: "0",
     text: "Get started",
     required: "No credit/debit card required",
@@ -65,9 +83,9 @@ export default async function Home() {
       <section className="mt-16 md:mt-20 lg:mt-32">
         <div className="container text-center">
           <div>
-            <Heading className="mt-24 md:mt-28 lg:mt-0">
-              Unleash the Power of Instagram Automation
-            </Heading>
+            <h1 className="mx-auto mt-24 max-w-xl text-4xl lg:max-w-3xl font-heading md:text-5xl lg:text-7xl text-pretty md:mt-28 lg:mt-0">
+              Automate your Instagram, Amplify your Influence
+            </h1>
 
             <p className="mx-auto mt-5 max-w-xl text-base leading-6 md:text-lg lg:text-xl md:max-w-lg lg:max-w-xl">
               Harness the power of AI to boost engagement, grow your audience,
@@ -75,9 +93,15 @@ export default async function Home() {
               more.
             </p>
 
-            <Button variant="primary" className="mt-5 tracking-widest">
-              <Link href={href}>Start Automating Now</Link>
-            </Button>
+            <Link
+              className={cn(
+                buttonVariants({ variant: "default" }),
+                "hidden px-6 mt-5 h-12 text-base font-light tracking-wider uppercase rounded-full shadow-none bg-button_primary border-button_primary lg:inline-flex hover:bg-button_primary"
+              )}
+              href={href}
+            >
+              Start Automating Now
+            </Link>
           </div>
           <div className="mt-12 text-center">
             <Image
@@ -95,7 +119,7 @@ export default async function Home() {
       {/* Features Section */}
       <section id="features" className="mt-20 md:mt-28 lg:mt-40">
         <div className="container text-center">
-          <Heading className="bg-[#e1e091] inline">
+          <Heading>
             Enhance Instagram Engagement with Powerful Automation Tools
           </Heading>
 
@@ -125,7 +149,7 @@ export default async function Home() {
       {/* Pricing Section */}
       <section id="pricing" className="mt-20 md:mt-28 lg:mt-40">
         <div className="container text-center">
-          <Heading className="inline">Simple No-tricks Pricing</Heading>
+          <Heading>Simple No-tricks Pricing</Heading>
 
           <div className="grid grid-cols-1 gap-10 mx-auto mt-10 lg:max-w-none md:max-w-lg md:mt-16 lg:mx-0 lg:grid-cols-2 lg:px-28">
             {plans.map((plan) => {
@@ -162,7 +186,7 @@ export default async function Home() {
       {/* testimonial section */}
       <section className="mt-20 md:mt-28 lg:mt-40">
         <div className="container text-center">
-          <Heading className="inline">What our Customers say</Heading>
+          <Heading>What our Customers say</Heading>
 
           <div className="grid grid-cols-1 mx-auto mt-10 divide-y divide-gray-200 lg:max-w-none md:max-w-lg md:mt-16 lg:mx-0 lg:grid-cols-2 lg:divide-y-0 lg:divide-x">
             {/* first customer review */}
@@ -177,9 +201,9 @@ export default async function Home() {
               </div>
 
               <p className="text-base text-center text-gray-950 lg:text-left text-pretty">
-                Slide is a great tool for automating messages and staying on top
-                of interactions. It's made managing my social media much simpler
-                and more effective.
+                Relink is a great tool for automating messages and staying on
+                top of interactions. It's made managing my social media much
+                simpler and more effective.
               </p>
 
               <div className="flex flex-col gap-4 justify-center items-center mt-2 lg:justify-start sm:flex-row sm:items-start">
@@ -212,7 +236,7 @@ export default async function Home() {
               </div>
 
               <p className="text-base text-center text-gray-950 lg:text-left text-pretty">
-                Using Slide has been a game-changer. The automated replies and
+                Using Relink has been a game-changer. The automated replies and
                 hashtag tracking features help me save time while engaging
                 better with my audience.
               </p>

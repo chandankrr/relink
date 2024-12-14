@@ -6,10 +6,15 @@ import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { useClerk, useUser } from "@clerk/nextjs";
 
-import { Button } from "./button";
 import { Icons } from "./icons";
+import { Button, buttonVariants } from "./ui/button";
 
-const navLinks = [
+interface NavLink {
+  label: string;
+  href: string;
+}
+
+const navLinks: NavLink[] = [
   { label: "Features", href: "#features" },
   { label: "Pricing", href: "#pricing" },
   { label: "Integrations", href: "#" },
@@ -53,8 +58,11 @@ export const Navbar = ({ isDefault }: { isDefault: boolean }) => {
       <div className="px-4 w-full lg:px-6">
         <div className="grid grid-cols-2 items-center lg:grid-cols-3 border-white/15 md:pr-2">
           <div>
-            <Link href="/" className="inline">
-              <Icons.logo className="w-auto h-9 md:h-auto" />
+            <Link
+              href="/"
+              className="text-2xl font-bold tracking-wider uppercase md:text-3xl font-heading md:h-auto"
+            >
+              Relink
             </Link>
           </div>
           <div className="hidden justify-center items-center lg:flex">
@@ -75,33 +83,42 @@ export const Navbar = ({ isDefault }: { isDefault: boolean }) => {
             {user ? (
               <>
                 <Button
-                  variant="secondary"
-                  className="hidden items-center tracking-wider lg:inline-flex border-red-600"
+                  className="hidden px-6 h-12 text-base font-light tracking-wider uppercase bg-transparent rounded-full border-red-600 shadow-none lg:inline-flex hover:bg-transparent"
+                  variant="outline"
                   onClick={handleSignOut}
                 >
                   Sign Out
                 </Button>
-                <Button
-                  variant="primary"
-                  className="hidden items-center tracking-wider lg:inline-flex"
+                <Link
+                  className={cn(
+                    buttonVariants({ variant: "default" }),
+                    "hidden px-6 h-12 text-base font-light tracking-wider uppercase rounded-full shadow-none bg-button_primary border-button_primary lg:inline-flex hover:bg-button_primary"
+                  )}
+                  href="/dashboard"
                 >
-                  <Link href="/dashboard">Dashboard</Link>
-                </Button>
+                  Dashboard
+                </Link>
               </>
             ) : (
               <>
-                <Button
-                  variant="secondary"
-                  className="hidden items-center tracking-wider lg:inline-flex"
+                <Link
+                  className={cn(
+                    buttonVariants({ variant: "outline" }),
+                    "hidden px-6 h-12 text-base font-light tracking-wider uppercase rounded-full shadow-none border-button_primary lg:inline-flex hover:bg-transparent"
+                  )}
+                  href="/sign-in"
                 >
-                  <Link href="/sign-in">Sign In</Link>
-                </Button>
-                <Button
-                  variant="primary"
-                  className="hidden items-center tracking-wider lg:inline-flex"
+                  Sign In
+                </Link>
+                <Link
+                  className={cn(
+                    buttonVariants({ variant: "default" }),
+                    "hidden px-6 h-12 text-base font-light tracking-wider uppercase rounded-full shadow-none bg-button_primary border-button_primary lg:inline-flex hover:bg-button_primary"
+                  )}
+                  href="/sign-up"
                 >
-                  <Link href="/sign-up">Sign Up</Link>
-                </Button>
+                  Sign Up
+                </Link>
               </>
             )}
           </div>

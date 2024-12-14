@@ -27,7 +27,7 @@ export default {
     },
     extend: {
       colors: {
-        brand: "#3b42c4",
+        button_primary: "#3b42c4",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {

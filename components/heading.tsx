@@ -15,7 +15,7 @@ export const Heading = ({
   return (
     <h2
       className={cn(
-        "mx-auto max-w-xl text-4xl leading-8 font-heading md:text-7xl text-pretty md:max-w-2xl lg:max-w-3xl",
+        "mx-auto w-full text-4xl font-heading md:text-5xl lg:text-7xl text-pretty",
         className
       )}
       {...otherProps}

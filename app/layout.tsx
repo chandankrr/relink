@@ -7,8 +7,8 @@ import localFont from "next/font/local";
 import { cn } from "@/lib/utils";
 import { ClerkProvider } from "@clerk/nextjs";
 
-const slide_gravity = localFont({
-  src: "./fonts/SlideGravity.woff2",
+const relink_gravity = localFont({
+  src: "./fonts/RelinkGravity.woff2",
   variable: "--font-heading",
 });
 
@@ -20,7 +20,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Slide",
+  title: "Relink",
   description: "A SaaS for automating your instagram engagement",
 };
 
@@ -35,7 +35,7 @@ export default function RootLayout({
         <body
           className={cn(
             inter.variable,
-            slide_gravity.variable,
+            relink_gravity.variable,
             "font-sans antialiased bg-white text-black"
           )}
         >
