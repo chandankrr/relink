@@ -56,7 +56,12 @@ export const Navbar = ({ isDefault }: { isDefault: boolean }) => {
       )}
     >
       <div className="px-4 w-full lg:px-6">
-        <div className="grid grid-cols-2 items-center lg:grid-cols-3 border-white/15 md:pr-2">
+        <div
+          className={cn(
+            "grid grid-cols-2 items-center border-white/15 md:pr-2",
+            isDefault ? "lg:grid-cols-3" : "lg:grid-cols-2"
+          )}
+        >
           <div>
             <Link
               href="/"
@@ -65,19 +70,21 @@ export const Navbar = ({ isDefault }: { isDefault: boolean }) => {
               Relink
             </Link>
           </div>
-          <div className="hidden justify-center items-center lg:flex">
-            <nav className="flex gap-6 text-sm uppercase">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  className="tracking-widest"
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </nav>
-          </div>
+          {isDefault && (
+            <div className="hidden justify-center items-center lg:flex">
+              <nav className="flex gap-6 text-sm uppercase">
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.label}
+                    href={link.href}
+                    className="tracking-widest"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </nav>
+            </div>
+          )}
           <div className="flex gap-4 justify-end">
             <Icons.menu />
             {user ? (

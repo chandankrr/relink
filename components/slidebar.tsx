@@ -38,7 +38,7 @@ const SIDEBAR_ITEMS: SidebarCategory[] = [
 
 export const Sidebar = ({ slug }: { slug: string }) => {
   return (
-    <div className="space-y-4 md:space-y-6 z-20 flex flex-col h-full">
+    <div className="flex z-20 flex-col space-y-4 h-full md:space-y-6">
       {/* logo */}
       <Link
         href="/"
@@ -55,14 +55,14 @@ export const Sidebar = ({ slug }: { slug: string }) => {
               <p className="text-xs font-medium leading-6 text-zinc-500">
                 {category}
               </p>
-              <div className="-mx-2 flex flex-1 flex-col">
+              <div className="flex flex-col flex-1 -mx-2">
                 {items.map((item) => (
                   <Link
                     key={item.id}
                     href={`/dashboard/${slug}/${item.label === "dashboard" ? "/" : item.label}`}
                     className={cn(
                       buttonVariants({ variant: "ghost" }),
-                      "w-full justify-start group flex items-center gap-x-2.5 px-2 py-1.5 text-sm font-medium leading-6 text-zinc-700 hover:bg-gray-50 transition capitalize"
+                      "w-full justify-start group flex items-center gap-x-2.5 px-2 py-1.5 text-sm font-medium leading-6 text-zinc-700 hover:bg-gray-50 transition capitalize rounded-none"
                     )}
                   >
                     <item.icon className="size-4 text-zinc-500 group-hover:text-zinc-700" />
@@ -76,7 +76,7 @@ export const Sidebar = ({ slug }: { slug: string }) => {
       </div>
 
       <div className="flex flex-col">
-        <hr className="my-4 md:my-6 w-full h-px bg-gray-100" />
+        <hr className="my-4 w-full h-px bg-gray-100 md:my-6" />
 
         <UserButton
           showName
