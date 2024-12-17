@@ -1,11 +1,11 @@
 {
-  "id": "01299e6e-b8a3-49a6-b3bb-f0ec5b3c8eab",
+  "id": "e697437f-4de2-4257-a211-f589b26fca59",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
-    "public.Automation": {
-      "name": "Automation",
+    "public.automation": {
+      "name": "automation",
       "schema": "",
       "columns": {
         "id": {
@@ -19,10 +19,11 @@
           "name": "name",
           "type": "varchar(255)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "default": "'Untitled'"
         },
-        "createdAt": {
-          "name": "createdAt",
+        "created_at": {
+          "name": "created_at",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
@@ -35,8 +36,8 @@
           "notNull": true,
           "default": false
         },
-        "userId": {
-          "name": "userId",
+        "user_id": {
+          "name": "user_id",
           "type": "uuid",
           "primaryKey": false,
           "notNull": false
@@ -44,11 +45,11 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "Automation_userId_User_id_fk": {
-          "name": "Automation_userId_User_id_fk",
-          "tableFrom": "Automation",
-          "tableTo": "User",
-          "columnsFrom": ["userId"],
+        "automation_user_id_user_id_fk": {
+          "name": "automation_user_id_user_id_fk",
+          "tableFrom": "automation",
+          "tableTo": "user",
+          "columnsFrom": ["user_id"],
           "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
@@ -60,8 +61,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.Dms": {
-      "name": "Dms",
+    "public.dms": {
+      "name": "dms",
       "schema": "",
       "columns": {
         "id": {
@@ -71,21 +72,21 @@
           "notNull": true,
           "default": "gen_random_uuid()"
         },
-        "automationId": {
-          "name": "automationId",
+        "automation_id": {
+          "name": "automation_id",
           "type": "uuid",
           "primaryKey": false,
           "notNull": false
         },
-        "createdAt": {
-          "name": "createdAt",
+        "created_at": {
+          "name": "created_at",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
           "default": "now()"
         },
-        "senderId": {
-          "name": "senderId",
+        "sender_id": {
+          "name": "sender_id",
           "type": "text",
           "primaryKey": false,
           "notNull": false
@@ -105,11 +106,11 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "Dms_automationId_Automation_id_fk": {
-          "name": "Dms_automationId_Automation_id_fk",
-          "tableFrom": "Dms",
-          "tableTo": "Automation",
-          "columnsFrom": ["automationId"],
+        "dms_automation_id_automation_id_fk": {
+          "name": "dms_automation_id_automation_id_fk",
+          "tableFrom": "dms",
+          "tableTo": "automation",
+          "columnsFrom": ["automation_id"],
           "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
@@ -121,8 +122,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.Integration": {
-      "name": "Integration",
+    "public.integrations": {
+      "name": "integrations",
       "schema": "",
       "columns": {
         "id": {
@@ -134,21 +135,21 @@
         },
         "name": {
           "name": "name",
-          "type": "integrations",
+          "type": "integration_type",
           "typeSchema": "public",
           "primaryKey": false,
           "notNull": true,
           "default": "'INSTAGRAM'"
         },
-        "createdAt": {
-          "name": "createdAt",
+        "created_at": {
+          "name": "created_at",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
           "default": "now()"
         },
-        "userId": {
-          "name": "userId",
+        "user_id": {
+          "name": "user_id",
           "type": "uuid",
           "primaryKey": false,
           "notNull": false
@@ -159,14 +160,14 @@
           "primaryKey": false,
           "notNull": true
         },
-        "expiresAt": {
-          "name": "expiresAt",
+        "expires_at": {
+          "name": "expires_at",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": false
         },
-        "instagramId": {
-          "name": "instagramId",
+        "instagram_id": {
+          "name": "instagram_id",
           "type": "text",
           "primaryKey": false,
           "notNull": false
@@ -174,11 +175,11 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "Integration_userId_User_id_fk": {
-          "name": "Integration_userId_User_id_fk",
-          "tableFrom": "Integration",
-          "tableTo": "User",
-          "columnsFrom": ["userId"],
+        "integrations_user_id_user_id_fk": {
+          "name": "integrations_user_id_user_id_fk",
+          "tableFrom": "integrations",
+          "tableTo": "user",
+          "columnsFrom": ["user_id"],
           "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
@@ -186,23 +187,23 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "Integration_token_unique": {
-          "name": "Integration_token_unique",
+        "integrations_token_unique": {
+          "name": "integrations_token_unique",
           "nullsNotDistinct": false,
           "columns": ["token"]
         },
-        "Integration_instagramId_unique": {
-          "name": "Integration_instagramId_unique",
+        "integrations_instagram_id_unique": {
+          "name": "integrations_instagram_id_unique",
           "nullsNotDistinct": false,
-          "columns": ["instagramId"]
+          "columns": ["instagram_id"]
         }
       },
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.Keyword": {
-      "name": "Keyword",
+    "public.keyword": {
+      "name": "keyword",
       "schema": "",
       "columns": {
         "id": {
@@ -218,8 +219,8 @@
           "primaryKey": false,
           "notNull": true
         },
-        "automationId": {
-          "name": "automationId",
+        "automation_id": {
+          "name": "automation_id",
           "type": "uuid",
           "primaryKey": false,
           "notNull": false
@@ -227,24 +228,30 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "Keyword_automationId_Automation_id_fk": {
-          "name": "Keyword_automationId_Automation_id_fk",
-          "tableFrom": "Keyword",
-          "tableTo": "Automation",
-          "columnsFrom": ["automationId"],
+        "keyword_automation_id_automation_id_fk": {
+          "name": "keyword_automation_id_automation_id_fk",
+          "tableFrom": "keyword",
+          "tableTo": "automation",
+          "columnsFrom": ["automation_id"],
           "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
+      "uniqueConstraints": {
+        "keyword_word_unique": {
+          "name": "keyword_word_unique",
+          "nullsNotDistinct": false,
+          "columns": ["word"]
+        }
+      },
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.Listener": {
-      "name": "Listener",
+    "public.listener": {
+      "name": "listener",
       "schema": "",
       "columns": {
         "id": {
@@ -254,15 +261,15 @@
           "notNull": true,
           "default": "gen_random_uuid()"
         },
-        "automationId": {
-          "name": "automationId",
+        "automation_id": {
+          "name": "automation_id",
           "type": "uuid",
           "primaryKey": false,
           "notNull": false
         },
         "listener": {
           "name": "listener",
-          "type": "listeners",
+          "type": "listener_type",
           "typeSchema": "public",
           "primaryKey": false,
           "notNull": true,
@@ -274,21 +281,21 @@
           "primaryKey": false,
           "notNull": true
         },
-        "commentReply": {
-          "name": "commentReply",
+        "comment_reply": {
+          "name": "comment_reply",
           "type": "text",
           "primaryKey": false,
           "notNull": false
         },
-        "dmCount": {
-          "name": "dmCount",
+        "dm_count": {
+          "name": "dm_count",
           "type": "integer",
           "primaryKey": false,
           "notNull": true,
           "default": 0
         },
-        "commentCount": {
-          "name": "commentCount",
+        "comment_count": {
+          "name": "comment_count",
           "type": "integer",
           "primaryKey": false,
           "notNull": true,
@@ -297,11 +304,11 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "Listener_automationId_Automation_id_fk": {
-          "name": "Listener_automationId_Automation_id_fk",
-          "tableFrom": "Listener",
-          "tableTo": "Automation",
-          "columnsFrom": ["automationId"],
+        "listener_automation_id_automation_id_fk": {
+          "name": "listener_automation_id_automation_id_fk",
+          "tableFrom": "listener",
+          "tableTo": "automation",
+          "columnsFrom": ["automation_id"],
           "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
@@ -313,8 +320,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.Post": {
-      "name": "Post",
+    "public.post": {
+      "name": "post",
       "schema": "",
       "columns": {
         "id": {
@@ -324,8 +331,8 @@
           "notNull": true,
           "default": "gen_random_uuid()"
         },
-        "postId": {
-          "name": "postId",
+        "post_id": {
+          "name": "post_id",
           "type": "text",
           "primaryKey": false,
           "notNull": true
@@ -342,16 +349,16 @@
           "primaryKey": false,
           "notNull": true
         },
-        "mediaType": {
-          "name": "mediaType",
-          "type": "mediatype",
+        "media_type": {
+          "name": "media_type",
+          "type": "media_type",
           "typeSchema": "public",
           "primaryKey": false,
           "notNull": true,
           "default": "'IMAGE'"
         },
-        "automationId": {
-          "name": "automationId",
+        "automation_id": {
+          "name": "automation_id",
           "type": "uuid",
           "primaryKey": false,
           "notNull": false
@@ -359,11 +366,11 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "Post_automationId_Automation_id_fk": {
-          "name": "Post_automationId_Automation_id_fk",
-          "tableFrom": "Post",
-          "tableTo": "Automation",
-          "columnsFrom": ["automationId"],
+        "post_automation_id_automation_id_fk": {
+          "name": "post_automation_id_automation_id_fk",
+          "tableFrom": "post",
+          "tableTo": "automation",
+          "columnsFrom": ["automation_id"],
           "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
@@ -375,8 +382,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.Subscription": {
-      "name": "Subscription",
+    "public.subscription": {
+      "name": "subscription",
       "schema": "",
       "columns": {
         "id": {
@@ -386,14 +393,14 @@
           "notNull": true,
           "default": "gen_random_uuid()"
         },
-        "userId": {
-          "name": "userId",
+        "user_id": {
+          "name": "user_id",
           "type": "uuid",
           "primaryKey": false,
           "notNull": false
         },
-        "createdAt": {
-          "name": "createdAt",
+        "created_at": {
+          "name": "created_at",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
@@ -401,21 +408,21 @@
         },
         "plan": {
           "name": "plan",
-          "type": "subscription_plan",
+          "type": "subscription_plan_type",
           "typeSchema": "public",
           "primaryKey": false,
           "notNull": true,
           "default": "'FREE'"
         },
-        "updatedAt": {
-          "name": "updatedAt",
+        "updated_at": {
+          "name": "updated_at",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
           "default": "now()"
         },
-        "customerId": {
-          "name": "customerId",
+        "customer_id": {
+          "name": "customer_id",
           "type": "text",
           "primaryKey": false,
           "notNull": false
@@ -423,11 +430,11 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "Subscription_userId_User_id_fk": {
-          "name": "Subscription_userId_User_id_fk",
-          "tableFrom": "Subscription",
-          "tableTo": "User",
-          "columnsFrom": ["userId"],
+        "subscription_user_id_user_id_fk": {
+          "name": "subscription_user_id_user_id_fk",
+          "tableFrom": "subscription",
+          "tableTo": "user",
+          "columnsFrom": ["user_id"],
           "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
@@ -435,18 +442,18 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "Subscription_customerId_unique": {
-          "name": "Subscription_customerId_unique",
+        "subscription_customer_id_unique": {
+          "name": "subscription_customer_id_unique",
           "nullsNotDistinct": false,
-          "columns": ["customerId"]
+          "columns": ["customer_id"]
         }
       },
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.Trigger": {
-      "name": "Trigger",
+    "public.trigger": {
+      "name": "trigger",
       "schema": "",
       "columns": {
         "id": {
@@ -462,8 +469,8 @@
           "primaryKey": false,
           "notNull": true
         },
-        "automationId": {
-          "name": "automationId",
+        "automation_id": {
+          "name": "automation_id",
           "type": "uuid",
           "primaryKey": false,
           "notNull": false
@@ -471,11 +478,11 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "Trigger_automationId_Automation_id_fk": {
-          "name": "Trigger_automationId_Automation_id_fk",
-          "tableFrom": "Trigger",
-          "tableTo": "Automation",
-          "columnsFrom": ["automationId"],
+        "trigger_automation_id_automation_id_fk": {
+          "name": "trigger_automation_id_automation_id_fk",
+          "tableFrom": "trigger",
+          "tableTo": "automation",
+          "columnsFrom": ["automation_id"],
           "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
@@ -487,8 +494,8 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.User": {
-      "name": "User",
+    "public.user": {
+      "name": "user",
       "schema": "",
       "columns": {
         "id": {
@@ -498,8 +505,8 @@
           "notNull": true,
           "default": "gen_random_uuid()"
         },
-        "clerkId": {
-          "name": "clerkId",
+        "clerk_id": {
+          "name": "clerk_id",
           "type": "text",
           "primaryKey": false,
           "notNull": true
@@ -522,25 +529,41 @@
           "primaryKey": false,
           "notNull": false
         },
-        "createdAt": {
-          "name": "createdAt",
+        "created_at": {
+          "name": "created_at",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
           "default": "now()"
         }
       },
-      "indexes": {},
+      "indexes": {
+        "clerk_id_idx": {
+          "name": "clerk_id_idx",
+          "columns": [
+            {
+              "expression": "clerk_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "User_clerkId_unique": {
-          "name": "User_clerkId_unique",
+        "user_clerk_id_unique": {
+          "name": "user_clerk_id_unique",
           "nullsNotDistinct": false,
-          "columns": ["clerkId"]
+          "columns": ["clerk_id"]
         },
-        "User_email_unique": {
-          "name": "User_email_unique",
+        "user_email_unique": {
+          "name": "user_email_unique",
           "nullsNotDistinct": false,
           "columns": ["email"]
         }
@@ -551,23 +574,23 @@
     }
   },
   "enums": {
-    "public.integrations": {
-      "name": "integrations",
+    "public.integration_type": {
+      "name": "integration_type",
       "schema": "public",
       "values": ["INSTAGRAM"]
     },
-    "public.listeners": {
-      "name": "listeners",
+    "public.listener_type": {
+      "name": "listener_type",
       "schema": "public",
       "values": ["SMARTAI", "MESSAGE"]
     },
-    "public.mediatype": {
-      "name": "mediatype",
+    "public.media_type": {
+      "name": "media_type",
       "schema": "public",
-      "values": ["IMAGE", "VIDEO", "CAROSEL_ALBUM"]
+      "values": ["IMAGE", "VIDEO", "CAROUSEL_ALBUM"]
     },
-    "public.subscription_plan": {
-      "name": "subscription_plan",
+    "public.subscription_plan_type": {
+      "name": "subscription_plan_type",
       "schema": "public",
       "values": ["PRO", "FREE"]
     }

@@ -6,182 +6,202 @@ import {
   pgTable,
   text,
   timestamp,
+  uniqueIndex,
   uuid,
   varchar,
 } from "drizzle-orm/pg-core";
 
-export const subscriptionPlanEnum = pgEnum("subscription_plan", [
+export const subscriptionPlanType = pgEnum("subscription_plan_type", [
   "PRO",
   "FREE",
 ]);
-export const integrationsEnum = pgEnum("integrations", ["INSTAGRAM"]);
-export const mediaTypeEnum = pgEnum("mediatype", [
+
+export const integrationType = pgEnum("integration_type", ["INSTAGRAM"]);
+
+export const mediaType = pgEnum("media_type", [
   "IMAGE",
   "VIDEO",
-  "CAROSEL_ALBUM",
+  "CAROUSEL_ALBUM",
 ]);
-export const listenersEnum = pgEnum("listeners", ["SMARTAI", "MESSAGE"]);
+
+export const listenerType = pgEnum("listener_type", ["SMARTAI", "MESSAGE"]);
 
 // User Table
-export const users = pgTable("User", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  clerkId: text("clerkId").unique().notNull(),
-  email: text("email").unique().notNull(),
-  firstname: varchar("firstname", { length: 255 }),
-  lastname: varchar("lastname", { length: 255 }),
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-});
+export const userTable = pgTable(
+  "user",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    clerkId: text("clerk_id").unique().notNull(),
+    email: text("email").unique().notNull(),
+    firstname: varchar("firstname", { length: 255 }),
+    lastname: varchar("lastname", { length: 255 }),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+  },
+  (table) => [uniqueIndex("clerk_id_idx").on(table.clerkId)]
+);
 
 // Subscription Table
-export const subscriptions = pgTable("Subscription", {
+export const subscriptionTable = pgTable("subscription", {
   id: uuid("id").primaryKey().defaultRandom(),
-  userId: uuid("userId").references(() => users.id, { onDelete: "cascade" }),
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-  plan: subscriptionPlanEnum("plan").default("FREE").notNull(),
-  updatedAt: timestamp("updatedAt").defaultNow().notNull(),
-  customerId: text("customerId").unique(),
+  userId: uuid("user_id").references(() => userTable.id, {
+    onDelete: "cascade",
+  }),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  plan: subscriptionPlanType("plan").default("FREE").notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  customerId: text("customer_id").unique(),
 });
 
 // Integration Table
-export const integrations = pgTable("Integration", {
+export const integrationTable = pgTable("integrations", {
   id: uuid("id").primaryKey().defaultRandom(),
-  name: integrationsEnum("name").default("INSTAGRAM").notNull(),
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-  userId: uuid("userId").references(() => users.id, { onDelete: "cascade" }),
+  name: integrationType("name").default("INSTAGRAM").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  userId: uuid("user_id").references(() => userTable.id, {
+    onDelete: "cascade",
+  }),
   token: text("token").unique().notNull(),
-  expiresAt: timestamp("expiresAt"),
-  instagramId: text("instagramId").unique(),
+  expiresAt: timestamp("expires_at"),
+  instagramId: text("instagram_id").unique(),
 });
 
 // Automation Table
-export const automations = pgTable("Automation", {
+export const automationTable = pgTable("automation", {
   id: uuid("id").primaryKey().defaultRandom(),
-  name: varchar("name", { length: 255 }).notNull(),
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  name: varchar("name", { length: 255 }).notNull().default("Untitled"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
   active: boolean("active").default(false).notNull(),
-  userId: uuid("userId").references(() => users.id, { onDelete: "cascade" }),
+  userId: uuid("user_id").references(() => userTable.id, {
+    onDelete: "cascade",
+  }),
 });
 
 // DMs Table
-export const dms = pgTable("Dms", {
+export const dmTable = pgTable("dms", {
   id: uuid("id").primaryKey().defaultRandom(),
-  automationId: uuid("automationId").references(() => automations.id),
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-  senderId: text("senderId"),
+  automationId: uuid("automation_id").references(() => automationTable.id),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  senderId: text("sender_id"),
   receiver: text("receiver"),
   message: text("message"),
 });
 
 // Post Table
-export const posts = pgTable("Post", {
+export const postTable = pgTable("post", {
   id: uuid("id").primaryKey().defaultRandom(),
-  postId: text("postId").notNull(),
+  postId: text("post_id").notNull(),
   caption: text("caption"),
   media: text("media").notNull(),
-  mediaType: mediaTypeEnum("mediaType").default("IMAGE").notNull(),
-  automationId: uuid("automationId").references(() => automations.id, {
+  mediaType: mediaType("media_type").default("IMAGE").notNull(),
+  automationId: uuid("automation_id").references(() => automationTable.id, {
     onDelete: "cascade",
   }),
 });
 
 // Listener Table
-export const listeners = pgTable("Listener", {
+export const listenerTable = pgTable("listener", {
   id: uuid("id").primaryKey().defaultRandom(),
-  automationId: uuid("automationId").references(() => automations.id, {
+  automationId: uuid("automation_id").references(() => automationTable.id, {
     onDelete: "cascade",
   }),
-  listener: listenersEnum("listener").default("MESSAGE").notNull(),
+  listener: listenerType("listener").default("MESSAGE").notNull(),
   prompt: text("prompt").notNull(),
-  commentReply: text("commentReply"),
-  dmCount: integer("dmCount").default(0).notNull(),
-  commentCount: integer("commentCount").default(0).notNull(),
+  commentReply: text("comment_reply"),
+  dmCount: integer("dm_count").default(0).notNull(),
+  commentCount: integer("comment_count").default(0).notNull(),
 });
 
 // Trigger Table
-export const triggers = pgTable("Trigger", {
+export const triggerTable = pgTable("trigger", {
   id: uuid("id").primaryKey().defaultRandom(),
   type: text("type").notNull(),
-  automationId: uuid("automationId").references(() => automations.id, {
+  automationId: uuid("automation_id").references(() => automationTable.id, {
     onDelete: "cascade",
   }),
 });
 
 // Keyword Table
-export const keywords = pgTable("Keyword", {
+export const keywordTable = pgTable("keyword", {
   id: uuid("id").primaryKey().defaultRandom(),
-  word: text("word").notNull(),
-  automationId: uuid("automationId").references(() => automations.id, {
+  word: text("word").notNull().unique(),
+  automationId: uuid("automation_id").references(() => automationTable.id, {
     onDelete: "cascade",
   }),
 });
 
 // Relations
-export const userRelations = relations(users, ({ one, many }) => ({
-  subscription: one(subscriptions, {
-    fields: [users.id],
-    references: [subscriptions.userId],
+export const userRelations = relations(userTable, ({ one, many }) => ({
+  subscription: one(subscriptionTable, {
+    fields: [userTable.id],
+    references: [subscriptionTable.userId],
   }),
-  integrations: many(integrations),
-  automations: many(automations),
+  integrations: many(integrationTable),
+  automations: many(automationTable),
 }));
 
-export const subscriptionRelations = relations(subscriptions, ({ one }) => ({
-  user: one(users, {
-    fields: [subscriptions.userId],
-    references: [users.id],
-  }),
-}));
+export const subscriptionRelations = relations(
+  subscriptionTable,
+  ({ one }) => ({
+    user: one(userTable, {
+      fields: [subscriptionTable.userId],
+      references: [userTable.id],
+    }),
+  })
+);
 
-export const integrationRelations = relations(integrations, ({ one }) => ({
-  user: one(users, {
-    fields: [integrations.userId],
-    references: [users.id],
-  }),
-}));
-
-export const automationRelations = relations(automations, ({ one, many }) => ({
-  user: one(users, {
-    fields: [automations.userId],
-    references: [users.id],
-  }),
-  triggers: many(triggers),
-  listener: one(listeners),
-  posts: many(posts),
-  dms: many(dms),
-  keywords: many(keywords),
-}));
-
-export const dmsRelations = relations(dms, ({ one }) => ({
-  automation: one(automations, {
-    fields: [dms.automationId],
-    references: [automations.id],
+export const integrationRelations = relations(integrationTable, ({ one }) => ({
+  user: one(userTable, {
+    fields: [integrationTable.userId],
+    references: [userTable.id],
   }),
 }));
 
-export const postRelations = relations(posts, ({ one }) => ({
-  automation: one(automations, {
-    fields: [posts.automationId],
-    references: [automations.id],
+export const automationRelations = relations(
+  automationTable,
+  ({ one, many }) => ({
+    user: one(userTable, {
+      fields: [automationTable.userId],
+      references: [userTable.id],
+    }),
+    trigger: many(triggerTable),
+    listener: one(listenerTable),
+    posts: many(postTable),
+    dms: many(dmTable),
+    keywords: many(keywordTable),
+  })
+);
+
+export const dmRelations = relations(dmTable, ({ one }) => ({
+  automation: one(automationTable, {
+    fields: [dmTable.automationId],
+    references: [automationTable.id],
   }),
 }));
 
-export const listenerRelations = relations(listeners, ({ one }) => ({
-  automation: one(automations, {
-    fields: [listeners.automationId],
-    references: [automations.id],
+export const postRelations = relations(postTable, ({ one }) => ({
+  automation: one(automationTable, {
+    fields: [postTable.automationId],
+    references: [automationTable.id],
   }),
 }));
 
-export const triggerRelations = relations(triggers, ({ one }) => ({
-  automation: one(automations, {
-    fields: [triggers.automationId],
-    references: [automations.id],
+export const listenerRelations = relations(listenerTable, ({ one }) => ({
+  automation: one(automationTable, {
+    fields: [listenerTable.automationId],
+    references: [automationTable.id],
   }),
 }));
 
-export const keywordRelations = relations(keywords, ({ one }) => ({
-  automation: one(automations, {
-    fields: [keywords.automationId],
-    references: [automations.id],
+export const triggerRelations = relations(triggerTable, ({ one }) => ({
+  automation: one(automationTable, {
+    fields: [triggerTable.automationId],
+    references: [automationTable.id],
+  }),
+}));
+
+export const keywordRelations = relations(keywordTable, ({ one }) => ({
+  automation: one(automationTable, {
+    fields: [keywordTable.automationId],
+    references: [automationTable.id],
   }),
 }));

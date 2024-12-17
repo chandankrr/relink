@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowLeft } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 import { Button } from "./ui/button";
 
@@ -19,6 +19,7 @@ export const DashboardPage = ({
   cta,
 }: DashboardPageProps) => {
   const router = useRouter();
+  const { slug } = useParams();
 
   return (
     <section className="flex flex-col flex-1 w-full h-full">
@@ -27,7 +28,7 @@ export const DashboardPage = ({
           <div className="flex gap-8 items-center w-full">
             {hideBackButton ? null : (
               <Button
-                onClick={() => router.push("/dashboard")}
+                onClick={() => router.push(`/dashboard/${slug}`)}
                 className="bg-white sm:w-fit"
                 variant="outline"
               >
