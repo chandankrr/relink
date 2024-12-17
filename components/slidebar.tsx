@@ -62,7 +62,7 @@ export const Sidebar = ({ slug }: { slug: string }) => {
                     href={`/dashboard/${slug}/${item.label === "dashboard" ? "/" : item.label}`}
                     className={cn(
                       buttonVariants({ variant: "ghost" }),
-                      "w-full justify-start group flex items-center gap-x-2.5 px-2 py-1.5 text-sm font-medium leading-6 text-zinc-700 hover:bg-gray-50 transition capitalize rounded-none"
+                      "w-full justify-start group flex items-center gap-x-2.5 px-2 py-1.5 text-sm font-medium leading-6 text-zinc-700 hover:bg-gray-50 transition capitalize h-12"
                     )}
                   >
                     <item.icon className="size-4 text-zinc-500 group-hover:text-zinc-700" />

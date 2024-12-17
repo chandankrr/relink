@@ -4,7 +4,9 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import localFont from "next/font/local";
 
+import { Toaster } from "@/components/ui/sonner";
 import { cn } from "@/lib/utils";
+import { ReactQueryProvider } from "@/providers/react-query-provider";
 import { ClerkProvider } from "@clerk/nextjs";
 
 const relink_gravity = localFont({
@@ -39,7 +41,8 @@ export default function RootLayout({
             "font-sans antialiased bg-white text-black"
           )}
         >
-          {children}
+          <ReactQueryProvider>{children}</ReactQueryProvider>
+          <Toaster />
         </body>
       </html>
     </ClerkProvider>
