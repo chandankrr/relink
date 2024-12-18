@@ -38,13 +38,11 @@ export const DashboardPage = ({
 
             <h3 className="text-5xl uppercase font-heading">{title}</h3>
           </div>
-          {cta ? <div className="w-full sm:w-fit">{cta}</div> : null}
+          {cta ? <div className="w-full md:w-fit">{cta}</div> : null}
         </div>
       </div>
 
-      <div className="flex overflow-y-auto flex-col flex-1 p-6 sm:p-8">
-        {children}
-      </div>
+      <div className="flex overflow-y-auto flex-col flex-1 p-8">{children}</div>
     </section>
   );
 };
