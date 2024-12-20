@@ -1,11 +1,27 @@
 "use server";
 
-import { eq } from "drizzle-orm";
+import { asc, eq } from "drizzle-orm";
 
 import { db } from "@/db/drizzle";
 import { automationTable, userTable } from "@/db/schema";
 
-export const createAutomation = async (clerkId: string) => {
+export const getAutomations = async (clerkId: string) => {
+  return await db.query.userTable.findFirst({
+    where: eq(userTable.clerkId, clerkId),
+    columns: {},
+    with: {
+      automations: {
+        orderBy: asc(automationTable.createdAt),
+        with: {
+          keywords: true,
+          listener: true,
+        },
+      },
+    },
+  });
+};
+
+export const insertAutomation = async (clerkId: string) => {
   const [user] = await db
     .select({ id: userTable.id })
     .from(userTable)

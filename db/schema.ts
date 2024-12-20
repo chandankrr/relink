@@ -69,6 +69,7 @@ export const integrationTable = pgTable("integrations", {
 export const automationTable = pgTable("automation", {
   id: uuid("id").primaryKey().defaultRandom(),
   name: varchar("name", { length: 255 }).notNull().default("Untitled"),
+  description: text("description").notNull().default("This is description..."),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   active: boolean("active").default(false).notNull(),
   userId: uuid("user_id").references(() => userTable.id, {
