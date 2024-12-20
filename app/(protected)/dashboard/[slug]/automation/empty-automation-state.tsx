@@ -27,7 +27,6 @@ export const EmptyAutomationState = () => {
           variant="outline"
           className="flex items-center space-x-2 w-full md:w-auto h-11"
           onClick={mutate}
-          disabled={isPending}
         >
           <span className="size-5">🚀</span>
           <span>{isPending ? "Creating..." : "Create Automation"}</span>

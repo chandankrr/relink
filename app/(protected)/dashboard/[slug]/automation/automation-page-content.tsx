@@ -3,6 +3,7 @@
 import { format } from "date-fns";
 import { Calendar, Pencil, Search, Trash2 } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -20,7 +21,24 @@ export const AutomationPageContent = () => {
 
   const { pathname } = usePaths();
 
-  // WIP: Implement search functionality
+  const [searchQuery, setSearchQuery] = useState("");
+
+  // Search functionality
+  const filteredAutomations = data?.data?.filter((automation) => {
+    if (!searchQuery.trim()) return true;
+
+    const query = searchQuery.toLowerCase();
+
+    const nameMatch = automation.name?.toLowerCase().includes(query);
+    const descriptionMatch = automation.description
+      ?.toLowerCase()
+      .includes(query);
+    const keywordMatch = automation.keywords?.some((keyword) =>
+      keyword.word?.toLowerCase().includes(query)
+    );
+
+    return nameMatch || descriptionMatch || keywordMatch;
+  });
 
   // Empty state for no automation
   if (data?.status !== 200 || data?.data?.length <= 0) {
@@ -34,7 +52,10 @@ export const AutomationPageContent = () => {
         <div className="flex flex-row flex-1 gap-2 items-center px-2 h-11 bg-white rounded-md border">
           <Search className="text-gray-400 size-5" />
           <Input
+            type="search"
             placeholder="Search automations..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
             className="rounded-none border-none shadow-none outline-none focus-visible:ring-0"
           />
         </div>
@@ -47,7 +68,7 @@ export const AutomationPageContent = () => {
 
         {/* Animations list */}
         <div className="divide-y">
-          {data.data.map((automation) => (
+          {filteredAutomations?.map((automation) => (
             <div
               key={automation.id}
               className="flex flex-col gap-4 justify-between py-4 sm:flex-row sm:items-start"
@@ -108,7 +129,7 @@ export const AutomationPageContent = () => {
                 />
 
                 <Link
-                  href={`${pathname}/${automation.id.slice(0, 8)}`}
+                  href={`${pathname}/${automation.id}`}
                   className={cn(
                     buttonVariants({ variant: "ghost", size: "icon" })
                   )}

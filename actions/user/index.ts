@@ -55,7 +55,7 @@ export const onBoardUser = async () => {
       return {
         status: 200,
         data: {
-          id: found.id.slice(0, 8),
+          id: found.id,
         },
       };
     }

@@ -13,7 +13,7 @@ export const CreateAutomation = () => {
   return (
     <Button
       className={cn(
-        "w-full h-12 tracking-wider uppercase rounded-none shadow-none hover:bg-button_primary bg-button_primary sm:w-fit"
+        "w-full h-12 px-6 tracking-wider uppercase rounded-full shadow-none hover:bg-button_primary bg-button_primary"
       )}
       onClick={mutate}
       disabled={isPending}
