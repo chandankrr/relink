@@ -17,6 +17,7 @@ import { EmptyAutomationState } from "./empty-automation-state";
 
 export const AutomationPageContent = () => {
   const { data } = useQueryAutomations();
+
   const { pathname } = usePaths();
 
   // WIP: Implement search functionality
@@ -102,7 +103,7 @@ export const AutomationPageContent = () => {
                 {/* WIP: Implement activation logic */}
                 <Switch
                   className="data-[state=checked]:bg-[#aae0a5]"
-                  checked
+                  checked={false}
                   aria-label="Toggle automation"
                 />
 

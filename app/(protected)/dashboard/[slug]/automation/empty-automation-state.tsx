@@ -1,8 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { useCreateAutomation } from "@/hooks/use-automations";
 
 export const EmptyAutomationState = () => {
-  // WIP: add functionality to create automation
+  const { mutate, isPending } = useCreateAutomation();
 
   return (
     <Card className="flex flex-col items-center justify-center rounded-2xl flex-1 text-center p-6">
@@ -25,9 +26,11 @@ export const EmptyAutomationState = () => {
         <Button
           variant="outline"
           className="flex items-center space-x-2 w-full md:w-auto h-11"
+          onClick={mutate}
+          disabled={isPending}
         >
           <span className="size-5">🚀</span>
-          <span>{false ? "Creating..." : "Create Automation"}</span>
+          <span>{isPending ? "Creating..." : "Create Automation"}</span>
         </Button>
       </div>
     </Card>
