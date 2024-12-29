@@ -1,5 +1,7 @@
 import { getAutomationInfo } from "@/actions/automation";
 import { AutomationBreadcrumb } from "@/components/automation-breadcrumb";
+import { Trigger } from "@/components/trigger";
+import { Card } from "@/components/ui/card";
 import { PrefetchUserAutomation } from "@/lib/prefetch";
 import {
   dehydrate,
@@ -24,8 +26,12 @@ export default async function Page({ params }: { params: { id: string } }) {
 
   return (
     <HydrationBoundary state={dehydrate(query)}>
-      <div>
+      <div className="flex flex-col items-center gap-y-20">
         <AutomationBreadcrumb id={id} />
+
+        <Card>
+          <Trigger id={id} />
+        </Card>
       </div>
     </HydrationBoundary>
   );

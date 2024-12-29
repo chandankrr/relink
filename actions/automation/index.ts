@@ -1,12 +1,9 @@
 "use server";
 
-import { onCurrentUser } from "../user";
+import { onCurrentUser } from '../user';
 import {
-  addAutomation,
-  findAutomation,
-  getAutomations,
-  updateAutomation,
-} from "./queries";
+    addAutomation, addListener, findAutomation, getAutomations, updateAutomation
+} from './queries';
 
 export const getAllAutomations = async () => {
   const user = await onCurrentUser();
@@ -105,6 +102,37 @@ export const updateAutomationDetails = async (
     return {
       status: 500,
       data: "Oops!, omething went wrong",
+    };
+  }
+};
+
+export const saveListener = async (
+  automationId: string,
+  listener: "SMARTAI" | "MESSAGE",
+  prompt: string,
+  reply?: string
+) => {
+  await onCurrentUser();
+
+  try {
+    const create = await addListener(automationId, listener, prompt, reply);
+
+    if (create) {
+      return {
+        status: 200,
+        data: "listener created",
+      };
+    }
+
+    return {
+      status: 404,
+      data: "Can't save listener",
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      status: 500,
+      data: "Oops! something went wrong",
     };
   }
 };

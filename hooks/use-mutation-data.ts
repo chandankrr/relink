@@ -1,20 +1,10 @@
-import { toast } from "sonner";
+import { toast } from 'sonner';
 
-import {
-  MutationFunction,
-  MutationKey,
-  useMutation,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { MutationFunction, MutationKey, useMutation, useQueryClient } from '@tanstack/react-query';
 
-interface ApiResponse<T = unknown> {
-  status: number;
-  data: T;
-}
-
-export const useMutationData = <TData = unknown, TVariables = unknown>(
+export const useMutationData = (
   mutationKey: MutationKey,
-  mutationFn: MutationFunction<ApiResponse<TData>, TVariables>,
+  mutationFn: MutationFunction<any, any>,
   queryKey?: string,
   onSuccess?: () => void
 ) => {
