@@ -3,8 +3,10 @@
 import { onCurrentUser } from "../user";
 import {
   addAutomation,
+  addKeyword,
   addListener,
   addTrigger,
+  deleteKeywordQuery,
   findAutomation,
   getAutomations,
   updateAutomation,
@@ -158,6 +160,58 @@ export const saveTrigger = async (automationId: string, trigger: string[]) => {
     return {
       status: 404,
       data: "Cannot save trigger",
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      status: 500,
+      data: "Oops! something went wrong",
+    };
+  }
+};
+
+export const saveKeyword = async (automationId: string, keyword: string) => {
+  await onCurrentUser();
+
+  try {
+    const create = await addKeyword(automationId, keyword);
+
+    if (create) {
+      return {
+        status: 200,
+        data: "Keyword saved",
+      };
+    }
+
+    return {
+      status: 404,
+      data: "Cannot save keyword",
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      status: 500,
+      data: "Oops! something went wrong",
+    };
+  }
+};
+
+export const deleteKeyword = async (id: string) => {
+  await onCurrentUser();
+
+  try {
+    const deleted = await deleteKeywordQuery(id);
+
+    if (deleted) {
+      return {
+        status: 200,
+        data: "Keyword deleted",
+      };
+    }
+
+    return {
+      status: 404,
+      data: "Cannot delete keyword",
     };
   } catch (error) {
     console.log(error);

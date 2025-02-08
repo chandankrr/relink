@@ -5,6 +5,7 @@ import { asc, eq } from "drizzle-orm";
 import { db } from "@/db/drizzle";
 import {
   automationTable,
+  keywordTable,
   listenerTable,
   triggerTable,
   userTable,
@@ -120,4 +121,15 @@ export const addTrigger = async (automationId: string, trigger: string[]) => {
       trigger: true,
     },
   });
+};
+
+export const addKeyword = async (automationId: string, keyword: string) => {
+  return await db.insert(keywordTable).values({ word: keyword, automationId });
+};
+
+export const deleteKeywordQuery = async (id: string) => {
+  return await db
+    .delete(keywordTable)
+    .where(eq(keywordTable.id, id))
+    .returning();
 };

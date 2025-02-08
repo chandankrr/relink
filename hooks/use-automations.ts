@@ -3,6 +3,8 @@ import { z } from "zod";
 
 import {
   createAutomation,
+  deleteKeyword,
+  saveKeyword,
   saveListener,
   saveTrigger,
   updateAutomationDetails,
@@ -111,4 +113,34 @@ export const useTriggers = (id: string) => {
   const onSaveTrigger = () => mutate({ types });
 
   return { types, onSetTrigger, onSaveTrigger, isPending };
+};
+
+export const useKeywords = (id: string) => {
+  const [keyword, setKeyword] = useState("");
+
+  const onValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setKeyword(e.target.value);
+  };
+
+  const { mutate } = useMutationData(
+    ["add-keyword"],
+    (data: { keyword: string }) => saveKeyword(id, data.keyword),
+    "automation-info",
+    () => setKeyword("")
+  );
+
+  const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      mutate({ keyword });
+      setKeyword("");
+    }
+  };
+
+  const { mutate: deleteMutate } = useMutationData(
+    ["delete-keyword"],
+    (data: { id: string }) => deleteKeyword(data.id),
+    "automation-info"
+  );
+
+  return { keyword, onValueChange, onKeyPress, deleteMutate };
 };

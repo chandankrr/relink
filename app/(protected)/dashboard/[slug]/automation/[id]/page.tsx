@@ -10,6 +10,7 @@ import {
   HydrationBoundary,
   QueryClient,
 } from "@tanstack/react-query";
+import { ThenNode } from "@/components/then-node";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -42,6 +43,7 @@ export default async function Page({ params }: PageProps) {
           </div>
           <Trigger id={id} />
         </Card>
+        <ThenNode id={id} />
       </div>
     </HydrationBoundary>
   );
