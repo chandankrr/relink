@@ -3,7 +3,12 @@
 import { asc, eq } from "drizzle-orm";
 
 import { db } from "@/db/drizzle";
-import { automationTable, userTable } from "@/db/schema";
+import {
+  automationTable,
+  listenerTable,
+  triggerTable,
+  userTable,
+} from "@/db/schema";
 
 export const getAutomations = async (clerkId: string) => {
   return await db.query.userTable.findFirst({
@@ -70,4 +75,49 @@ export const updateAutomation = async (
     })
     .where(eq(automationTable.id, id))
     .returning();
+};
+
+export const addListener = async (
+  automationId: string,
+  listener: "SMARTAI" | "MESSAGE",
+  prompt: string,
+  reply?: string
+) => {
+  await db
+    .insert(listenerTable)
+    .values({
+      automationId,
+      listener,
+      prompt,
+      commentReply: reply,
+    })
+    .returning();
+
+  return await db.query.automationTable.findFirst({
+    where: eq(automationTable.id, automationId),
+    with: {
+      listener: true,
+    },
+  });
+};
+
+export const addTrigger = async (automationId: string, trigger: string[]) => {
+  if (trigger.length === 2) {
+    await db.insert(triggerTable).values([
+      { automationId, type: trigger[0] },
+      { automationId, type: trigger[1] },
+    ]);
+  } else {
+    await db.insert(triggerTable).values({
+      automationId,
+      type: trigger[0],
+    });
+  }
+
+  return await db.query.automationTable.findFirst({
+    where: eq(automationTable.id, automationId),
+    with: {
+      trigger: true,
+    },
+  });
 };
