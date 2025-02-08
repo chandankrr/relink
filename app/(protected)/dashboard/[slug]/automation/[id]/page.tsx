@@ -1,5 +1,9 @@
+import { CircleAlert } from "lucide-react";
+
 import { getAutomationInfo } from "@/actions/automation";
 import { AutomationBreadcrumb } from "@/components/automation-breadcrumb";
+import { Trigger } from "@/components/trigger";
+import { Card } from "@/components/ui/card";
 import { PrefetchUserAutomation } from "@/lib/prefetch";
 import {
   dehydrate,
@@ -7,7 +11,11 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 
-export async function generateMetadata({ params }: { params: { id: string } }) {
+interface PageProps {
+  params: Promise<{ id: string }>;
+}
+
+export async function generateMetadata({ params }: PageProps) {
   const { id } = await params;
   const info = await getAutomationInfo(id);
 
@@ -16,7 +24,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
   };
 }
 
-export default async function Page({ params }: { params: { id: string } }) {
+export default async function Page({ params }: PageProps) {
   const { id } = await params;
 
   const query = new QueryClient();
@@ -24,8 +32,16 @@ export default async function Page({ params }: { params: { id: string } }) {
 
   return (
     <HydrationBoundary state={dehydrate(query)}>
-      <div>
+      <div className="flex flex-col items-center gap-y-20">
         <AutomationBreadcrumb id={id} />
+
+        <Card className="w-full lg:w-3/4">
+          <div className="flex gap-x-2">
+            <CircleAlert className="size-5" />
+            When...
+          </div>
+          <Trigger id={id} />
+        </Card>
       </div>
     </HydrationBoundary>
   );
