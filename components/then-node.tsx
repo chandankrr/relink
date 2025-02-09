@@ -45,7 +45,7 @@ export const ThenNode = ({ id }: { id: string }) => {
       {data.data.posts.length > 0 ? (
         <></>
       ) : commentTrigger ? (
-        <PostButton />
+        <PostButton id={id} />
       ) : (
         <></>
       )}

@@ -7,6 +7,7 @@ import {
   automationTable,
   keywordTable,
   listenerTable,
+  postTable,
   triggerTable,
   userTable,
 } from "@/db/schema";
@@ -132,4 +133,21 @@ export const deleteKeywordQuery = async (id: string) => {
     .delete(keywordTable)
     .where(eq(keywordTable.id, id))
     .returning();
+};
+
+export const addPosts = async (
+  automationId: string,
+  posts: {
+    postId: string;
+    caption?: string;
+    media: string;
+    mediaType: "IMAGE" | "VIDEO" | "CAROUSEL_ALBUM";
+  }[]
+) => {
+  const postWithAutomationId = posts.map((post) => ({
+    ...post,
+    automationId,
+  }));
+
+  return await db.insert(postTable).values(postWithAutomationId);
 };

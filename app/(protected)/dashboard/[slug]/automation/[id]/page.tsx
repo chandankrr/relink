@@ -11,6 +11,7 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 import { ThenNode } from "@/components/then-node";
+import { PostNode } from "@/components/post-node";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -44,6 +45,7 @@ export default async function Page({ params }: PageProps) {
           <Trigger id={id} />
         </Card>
         <ThenNode id={id} />
+        <PostNode id={id} />
       </div>
     </HydrationBoundary>
   );
