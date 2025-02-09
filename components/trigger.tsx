@@ -70,7 +70,8 @@ export const Trigger = ({ id }: { id: string }) => {
           disabled={types.length === 0}
           className="bg-gradient-to-br from-[#3352cc] to-[#1c2d70] cursor-pointer"
         >
-          {isPending && <Loader2Icon className="size-4 mr-2" />}Create Trigger
+          {isPending && <Loader2Icon className="size-4 mr-2 animate-spin" />}
+          Create Trigger
         </Button>
       </div>
     </TriggerButton>
