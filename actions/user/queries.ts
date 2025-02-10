@@ -41,3 +41,26 @@ export const createUser = async (
     id: createdUser.id,
   };
 };
+
+export const updateSubscription = async (
+  clerkId: string,
+  props: { customerId?: string; plan?: "FREE" | "PRO" }
+) => {
+  // First, get the user's ID using the clerkId
+  const user = await db.query.userTable.findFirst({
+    where: eq(userTable.clerkId, clerkId),
+  });
+
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  // Then update the subscription using the userId
+  return db
+    .update(subscriptionTable)
+    .set({
+      ...props,
+      updatedAt: new Date(), // Update the updatedAt timestamp
+    })
+    .where(eq(subscriptionTable.userId, user.id));
+};
