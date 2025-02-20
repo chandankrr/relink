@@ -1,4 +1,4 @@
-import { ArrowRightIcon, LucideProps, Star } from "lucide-react";
+import { ArrowRightIcon, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -8,13 +8,6 @@ import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import chatImage from "@/public/chat.png";
 import { currentUser } from "@clerk/nextjs/server";
-
-interface Feature {
-  id: number;
-  title: string;
-  description: string;
-  icon: React.FC<LucideProps>;
-}
 
 interface Plan {
   id: number;
@@ -26,7 +19,7 @@ interface Plan {
   color: string;
 }
 
-const features: Feature[] = [
+const features = [
   {
     id: 1,
     title: "Automate Direct Messages to Followers",
