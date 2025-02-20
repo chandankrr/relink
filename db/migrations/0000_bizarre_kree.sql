@@ -5,6 +5,7 @@ CREATE TYPE "public"."subscription_plan_type" AS ENUM('PRO', 'FREE');--> stateme
 CREATE TABLE "automation" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"name" varchar(255) DEFAULT 'Untitled' NOT NULL,
+	"description" text DEFAULT 'This is description...' NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"active" boolean DEFAULT false NOT NULL,
 	"user_id" uuid
@@ -34,8 +35,7 @@ CREATE TABLE "integrations" (
 CREATE TABLE "keyword" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"word" text NOT NULL,
-	"automation_id" uuid,
-	CONSTRAINT "keyword_word_unique" UNIQUE("word")
+	"automation_id" uuid
 );
 --> statement-breakpoint
 CREATE TABLE "listener" (

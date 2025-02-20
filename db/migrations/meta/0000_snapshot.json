@@ -1,5 +1,5 @@
 {
-  "id": "e697437f-4de2-4257-a211-f589b26fca59",
+  "id": "b654e71b-bbde-4ea1-bbd0-ede3343fc169",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -21,6 +21,13 @@
           "primaryKey": false,
           "notNull": true,
           "default": "'Untitled'"
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'This is description...'"
         },
         "created_at": {
           "name": "created_at",
@@ -239,13 +246,7 @@
         }
       },
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {
-        "keyword_word_unique": {
-          "name": "keyword_word_unique",
-          "nullsNotDistinct": false,
-          "columns": ["word"]
-        }
-      },
+      "uniqueConstraints": {},
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false

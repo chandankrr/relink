@@ -6,6 +6,7 @@ import {
   pgTable,
   text,
   timestamp,
+  unique,
   uniqueIndex,
   uuid,
   varchar,
@@ -122,13 +123,21 @@ export const triggerTable = pgTable("trigger", {
 });
 
 // Keyword Table
-export const keywordTable = pgTable("keyword", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  word: text("word").notNull().unique(),
-  automationId: uuid("automation_id").references(() => automationTable.id, {
-    onDelete: "cascade",
-  }),
-});
+export const keywordTable = pgTable(
+  "keyword",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    word: text("word").notNull(),
+    automationId: uuid("automation_id").references(() => automationTable.id, {
+      onDelete: "cascade",
+    }),
+  },
+  (table) => [
+    {
+      uniqueWordPerAutomation: unique().on(table.automationId, table.word),
+    },
+  ]
+);
 
 // Relations
 export const userRelations = relations(userTable, ({ one, many }) => ({
